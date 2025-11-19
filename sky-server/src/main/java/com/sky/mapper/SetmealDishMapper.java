@@ -3,6 +3,8 @@ package com.sky.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface SetmealDishMapper {
     /**
@@ -11,5 +13,5 @@ public interface SetmealDishMapper {
      * @return
      */
     @Select("select setmeal_id from setmeal_dish where dish_id = #{id}")
-    Long getSetmealIdByDishId(Long id);
+    List<Long> getSetmealIdsByDishId(Long id);
 }

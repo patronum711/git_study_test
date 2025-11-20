@@ -1,9 +1,14 @@
 package com.sky.mapper;
 
+import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
+import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
+import com.sky.vo.SetmealVO;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface SetmealMapper {
@@ -14,4 +19,28 @@ public interface SetmealMapper {
      */
     @AutoFill(value = OperationType.UPDATE)
     void update(Setmeal setmeal);
+
+    /**
+     * 新增套餐
+     * @param setmeal
+     */
+    @AutoFill(value = OperationType.INSERT)
+    void insert(Setmeal setmeal);
+
+    /**
+     * 套餐分页查询
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    Page<SetmealVO> page(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    /**
+     * 根据id查询套餐（多表查询category_id对应的category_name）
+     * @param id
+     * @return
+     */
+    @Select("select s.*, c.name category_name from setmeal s left outer join category c " +
+            "on s.category_id = c.id " +
+            "where s.id = #{id}")
+    SetmealVO getById(Long id);
 }

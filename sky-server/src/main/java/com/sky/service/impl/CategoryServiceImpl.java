@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -88,8 +89,18 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public List<Category> listByType(Integer type) {
-        List<Category> list = categoryMapper.listByType(type);
-        return list;
+        if (type == null) {
+            // 分别查询type=1和type=2的结果
+            List<Category> type1List = categoryMapper.listByType(1);
+            List<Category> type2List = categoryMapper.listByType(2);
+
+            // 合并结果
+            List<Category> result = new ArrayList<>();
+            result.addAll(type1List);
+            result.addAll(type2List);
+            return result;
+        }
+        return categoryMapper.listByType(type);
     }
 
     /**

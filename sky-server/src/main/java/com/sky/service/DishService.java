@@ -3,6 +3,7 @@ package com.sky.service;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
+import com.sky.entity.User;
 import com.sky.result.PageResult;
 import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -56,4 +57,12 @@ public interface DishService {
      * @return
      */
     List<Dish> queryByCategoryIdOrName(Integer categoryId, String name);
+
+
+    /**
+     * 根据分类id查询菜品（返回DishVO）
+     * @param dish
+     * @return
+     */
+    List<DishVO> listByCategoryId(Dish dish);
 }

@@ -175,4 +175,23 @@ public class DishServiceImpl implements DishService {
         else
             return dishMapper.listByName(name);
     }
+
+    /**
+     * 根据分类id查询菜品
+     * @param dish
+     * @return
+     */
+    @Override
+    public List<DishVO> listByCategoryId(Dish dish) {
+        List<DishVO> dishVOList = dishMapper.listVObyCategoryId(dish);
+
+        if(dishVOList != null && !dishVOList.isEmpty()){
+            for(DishVO dishVO : dishVOList){
+                List<DishFlavor> flavors = dishFlavorMapper.getByDishId(dishVO.getId());
+                dishVO.setFlavors(flavors);
+            }
+        }
+
+        return dishVOList;
+    }
 }

@@ -39,7 +39,7 @@ public interface DishMapper {
 
     /**
      * 批量删除菜品
-     * @param ids
+     * @param id
      */
     @Delete("delete from dish where id = #{id}")
     void deleteById(Long id);
@@ -73,4 +73,15 @@ public interface DishMapper {
      */
     @Select("select * from dish where name like concat('%', #{name}, '%')")
     List<Dish> listByName(String name);
+
+    /**
+     * 根据状态、分类名查询菜品（返回VO）
+     * @param dish
+     * @return
+     */
+    @Select("select d.*, c.name category_name from dish d left outer join category c " +
+            "on d.category_id = c.id " +
+            "where d.category_id = #{categoryId} " +
+            "and d.status = #{status}")
+    List<DishVO> listVObyCategoryId(Dish dish);
 }
